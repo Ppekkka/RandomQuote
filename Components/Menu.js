@@ -26,6 +26,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 9,
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
+    paddingBottom: 4,
   },
 });
 

@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
+import RanScreen from "./Screens/RanScreen";
 import AddScreen from "./Screens/AddScreen";
 
 const Stack = createNativeStackNavigator();
@@ -13,6 +13,7 @@ export default function App() {
           headerShown: false,
         }}
       >
+        <Stack.Screen name="Ran" component={RanScreen} />
         <Stack.Screen name="Add" component={AddScreen} />
       </Stack.Navigator>
     </NavigationContainer>
