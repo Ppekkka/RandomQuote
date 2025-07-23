@@ -52,12 +52,13 @@ const QuoScreen = ({ navigation }) => {
 
       <SafeAreaView style={styles.book_cards_container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {books.map(({ title_eng, title_rus, author }) => {
+          {books.map(({ title_eng, title_rus, author }, idx) => {
             return (
               <BookCard
                 title_eng={title_eng}
                 title_rus={title_rus}
                 author={author}
+                key={idx}
               />
             );
           })}
@@ -70,7 +71,7 @@ const QuoScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#232323",
-    paddingVertical: 35,
+    paddingVertical: 40,
     paddingHorizontal: 20,
     height: "100%",
   },

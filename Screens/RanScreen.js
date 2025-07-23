@@ -32,7 +32,7 @@ const RanScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#232323",
-    paddingVertical: 30,
+    paddingVertical: 40,
     paddingHorizontal: 20,
     height: "100%",
   },
