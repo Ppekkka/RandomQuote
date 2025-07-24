@@ -8,6 +8,7 @@ import {
   Switch,
 } from "react-native";
 import Quote from "../Components/Quote";
+import { useState } from "react";
 
 const quotes = [
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimd minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor inreprehenderit in voluptate velit esse cillum dolore eu fugiat nulla",
@@ -20,6 +21,9 @@ const quotes = [
 ];
 
 const BookScreen = ({ navigation }) => {
+  const [ofUse, setOfUse] = useState(true);
+  handleSetOfUse = () => setOfUse(!ofUse);
+
   lastIdx = quotes.length - 1;
 
   return (
@@ -34,7 +38,8 @@ const BookScreen = ({ navigation }) => {
         <Text style={{ color: "white", fontSize: 25 }}>Of use</Text>
         <Switch
           trackColor={{ false: "#ff8b8bff", true: "#91d1ffff" }}
-          value={true}
+          onChange={handleSetOfUse}
+          value={ofUse}
         />
       </View>
 
