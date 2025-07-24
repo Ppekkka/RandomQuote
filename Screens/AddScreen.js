@@ -6,8 +6,19 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Menu from "../Components/Menu";
+import { useState } from "react";
+import { setQuotes } from "../helpers/setQuotes";
 
 const AddScreen = ({ navigation }) => {
+  const [text, setText] = useState("");
+
+  const handleAdd = async () => {
+    if (text) {
+      await setQuotes(text);
+      setText("");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Menu navigation={navigation} />
@@ -17,10 +28,11 @@ const AddScreen = ({ navigation }) => {
           placeholder="Type your quotes there..."
           placeholderTextColor="grey"
           multiline
+          value={text}
+          onChangeText={(txt) => setText(txt)}
         />
       </View>
-
-      <TouchableOpacity style={styles.add_button}>
+      <TouchableOpacity style={styles.add_button} onPress={handleAdd}>
         <Text style={styles.add_text}>+</Text>
       </TouchableOpacity>
     </View>

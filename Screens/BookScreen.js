@@ -22,7 +22,6 @@ const quotes = [
 
 const BookScreen = ({ navigation }) => {
   const [ofUse, setOfUse] = useState(true);
-  handleSetOfUse = () => setOfUse(!ofUse);
 
   lastIdx = quotes.length - 1;
 
@@ -38,7 +37,7 @@ const BookScreen = ({ navigation }) => {
         <Text style={{ color: "white", fontSize: 25 }}>Of use</Text>
         <Switch
           trackColor={{ false: "#ff8b8bff", true: "#91d1ffff" }}
-          onChange={handleSetOfUse}
+          onChange={setOfUse(!ofUse)}
           value={ofUse}
         />
       </View>

@@ -1,11 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-const BookCard = ({ title_eng, title_rus, author }) => {
+const BookCard = ({ title, author }) => {
   return (
     <TouchableOpacity style={styles.container}>
-      <Text style={styles.book_text}>
-        "{title_eng}" ("{title_rus}")
-      </Text>
+      <Text style={styles.book_text}>"{title}"</Text>
       <Text style={styles.book_text}>- {author}</Text>
     </TouchableOpacity>
   );
