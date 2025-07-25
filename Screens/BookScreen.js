@@ -8,22 +8,27 @@ import {
   Switch,
 } from "react-native";
 import Quote from "../Components/Quote";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getBook } from "../helpers/getBook";
 
-const quotes = [
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimd minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor inreprehenderit in voluptate velit esse cillum dolore eu fugiat nulla",
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimd minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor inreprehenderit in voluptate velit esse cillum dolore eu fugiat nulla",
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimd minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor inreprehenderit in voluptate velit esse cillum dolore eu fugiat nulla",
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimd minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor inreprehenderit in voluptate velit esse cillum dolore eu fugiat nulla",
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimd minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor inreprehenderit in voluptate velit esse cillum dolore eu fugiat nulla",
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimd minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor inreprehenderit in voluptate velit esse cillum dolore eu fugiat nulla",
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimd minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor inreprehenderit in voluptate velit esse cillum dolore eu fugiat nulla",
-];
+const BookScreen = ({ route, navigation }) => {
+  const { title } = route.params;
 
-const BookScreen = ({ navigation }) => {
   const [ofUse, setOfUse] = useState(true);
+  const [book, setBook] = useState([]);
 
-  lastIdx = quotes.length - 1;
+  const handleSetOfUse = () => setOfUse(!ofUse);
+
+  useEffect(() => {
+    if (title && !book?.length) {
+      const handleSetBook = async () => {
+        setBook(await getBook(title));
+      };
+      handleSetBook();
+    }
+  }, []);
+
+  let quotes = ofUse ? book?.quotesOfUse : book?.usedQuotes;
 
   return (
     <View style={styles.container}>
@@ -37,16 +42,23 @@ const BookScreen = ({ navigation }) => {
         <Text style={{ color: "white", fontSize: 25 }}>Of use</Text>
         <Switch
           trackColor={{ false: "#ff8b8bff", true: "#91d1ffff" }}
-          onChange={setOfUse(!ofUse)}
+          onChange={handleSetOfUse}
           value={ofUse}
         />
       </View>
 
       <SafeAreaView style={{ flex: 15 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {quotes.map((quote, idx) => {
-            return <Quote text={quote} isLast={idx == lastIdx} key={idx} />;
-          })}
+          {quotes &&
+            quotes.map((quote, idx) => {
+              return (
+                <Quote
+                  text={quote}
+                  isLast={idx == quotes.length - 1}
+                  key={idx}
+                />
+              );
+            })}
         </ScrollView>
       </SafeAreaView>
     </View>

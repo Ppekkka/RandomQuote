@@ -17,6 +17,6 @@ export const setQuotes = async (text) => {
   try {
     await AsyncStorage.setItem(title, value);
   } catch (e) {
-    console.log(e);
+    console.log('setQuotes', e);
   }
 };

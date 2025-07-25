@@ -1,67 +1,31 @@
 import { StyleSheet, View, ScrollView, SafeAreaView } from "react-native";
 import Menu from "../Components/Menu";
 import BookCard from "../Components/BookCard";
-
-books = [
-  {
-    title_eng: "oiifdowif",
-    title_rus: "шрири",
-    author: "IJijn Nnjnk",
-  },
-  {
-    title_eng: "oiifdowif ouhiu hiu",
-    title_rus: "шрири шгр шгршгшгп",
-    author: "IJi ibiguy ijoijoi",
-  },
-  {
-    title_eng: "oiifdowif ouhiu hiu",
-    title_rus: "шрири шгр шгршгшгп",
-    author: "IJi ibiguy ijoijoi",
-  },
-  {
-    title_eng: "oiifdowif ouhiu hiu",
-    title_rus: "шрири шгр шгршгшгп",
-    author: "IJi ibiguy ijoijoi",
-  },
-  {
-    title_eng: "oiifdowif ouhiu hiu",
-    title_rus: "шрири шгр шгршгшгп",
-    author: "IJi ibiguy ijoijoi",
-  },
-  {
-    title_eng: "oiifdowif ouhiu hiu",
-    title_rus: "шрири шгр шгршгшгп",
-    author: "IJi ibiguy ijoijoi",
-  },
-  {
-    title_eng: "oiifdowif ouhiu hiu",
-    title_rus: "шрири шгр шгршгшгп",
-    author: "IJi ibiguy ijoijoi",
-  },
-  {
-    title_eng: "oiifdowif ouhiu hiu",
-    title_rus: "шрири шгр шгршгшгп",
-    author: "IJi ibiguy ijoijoi",
-  },
-];
+import { useEffect, useState } from "react";
+import { getBooks } from "../helpers/getBooks";
 
 const QuoScreen = ({ navigation }) => {
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    const handleSetBook = async () => {
+      setBooks(await getBooks());
+    };
+    handleSetBook();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Menu navigation={navigation} />
 
       <SafeAreaView style={styles.book_cards_container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {books.map(({ title_eng, title_rus, author }, idx) => {
-            return (
-              <BookCard
-                title_eng={title_eng}
-                title_rus={title_rus}
-                author={author}
-                key={idx}
-              />
-            );
-          })}
+          {books.length &&
+            books.map((title, idx) => {
+              return (
+                <BookCard title={title} navigation={navigation} key={idx} />
+              );
+            })}
         </ScrollView>
       </SafeAreaView>
     </View>

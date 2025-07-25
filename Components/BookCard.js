@@ -1,10 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-const BookCard = ({ title, author }) => {
+const BookCard = ({ title, navigation }) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => navigation.navigate("Book", { name: "Book", title })}
+    >
       <Text style={styles.book_text}>"{title}"</Text>
-      <Text style={styles.book_text}>- {author}</Text>
     </TouchableOpacity>
   );
 };
@@ -17,7 +19,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderColor: "white",
     borderWidth: 2,
-    justifyContent: "space-between",
+    justifyContent: "center",
     marginBottom: 10,
   },
 
