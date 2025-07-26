@@ -21,7 +21,8 @@ const RanScreen = ({ navigation }) => {
   const [data, setData] = useState(initValue);
 
   const handleSetData = async () => {
-    setData(await getRandomQuote());
+    const newData = await getRandomQuote()
+    if(newData) setData(newData);
   };
 
   const handleCopy = async () => {
@@ -49,7 +50,7 @@ const RanScreen = ({ navigation }) => {
         <View style={{ flex: 20 }}>
           <Text style={styles.quote}>{data.quote}</Text>
           <Text style={styles.book_title}>{data.title}</Text>
-          <Text style={styles.name}>- {data.book.author}</Text>
+          <Text style={styles.name}>{data.book.author}</Text>
         </View>
       </View>
     </View>
