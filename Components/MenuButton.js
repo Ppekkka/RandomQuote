@@ -2,11 +2,11 @@ import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 
 const MenuButton = ({ title, func = () => {} }) => {
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.button_background} onPress={func}>
+    <TouchableOpacity style={styles.container} onPress={func}>
+      <View style={styles.button_background}>
         <Text style={styles.button_text}>{title}</Text>
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 

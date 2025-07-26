@@ -1,28 +1,55 @@
 import { View, Text, StyleSheet } from "react-native";
 import Menu from "../Components/Menu";
 import MenuButton from "../Components/MenuButton";
+import { useEffect, useState } from "react";
+import { getRandomQuote } from "../helpers/getRandomQuote";
+import { markQuoteAsUsed } from "../helpers/markQuoteAsUsed";
+import Clipboard from "@react-native-clipboard/clipboard";
+
+const initValue = {
+  quote: "",
+  book: {
+    quotesOfUse: [],
+    usedQuotes: [],
+    author: "",
+  },
+  title: "",
+  idx: -1,
+};
 
 const RanScreen = ({ navigation }) => {
+  const [data, setData] = useState(initValue);
+
+  const handleSetData = async () => {
+    setData(await getRandomQuote());
+  };
+
+  const handleCopy = async () => {
+    markQuoteAsUsed(data.title, data.book, data.idx);
+
+    const stringToCopy = `${data.quote}\n\n${data.title}\n${data.book.author}`;
+    console.log(stringToCopy)
+    Clipboard.setString(stringToCopy);
+  };
+
+  useEffect(() => {
+    handleSetData();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Menu navigation={navigation} />
 
-      <View style={styles.ran_container}>
+      <View style={{ flex: 15 }}>
         <View style={styles.ran_menu}>
-          <MenuButton title="generate" />
-          <MenuButton title="copy" />
+          <MenuButton title="another" func={handleSetData} />
+          <MenuButton title="copy" func={handleCopy} />
         </View>
 
-        <View style={styles.quote_container}>
-          <Text style={styles.quote}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          </Text>
-          <Text style={styles.book_title}>"Hhiuhiahd" ("ПШПпориорир")</Text>
-          <Text style={styles.name}>- IUhuih IUiuiu</Text>
+        <View style={{ flex: 20 }}>
+          <Text style={styles.quote}>{data.quote}</Text>
+          <Text style={styles.book_title}>{data.title}</Text>
+          <Text style={styles.name}>- {data.book.author}</Text>
         </View>
       </View>
     </View>
@@ -36,17 +63,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     height: "100%",
   },
-  ran_container: {
-    flex: 15,
-  },
   ran_menu: {
     flex: 3,
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 9,
-  },
-  quote_container: {
-    flex: 20,
   },
   quote: {
     color: "white",
